@@ -8,6 +8,8 @@ GAME RULES:
 - The first player to reach 100 points on GLOBAL score wins the game
 
 */
+
+//defining variable and object
 var roundScore = 0
 var activePlayer = 0
 var playerOne = {
@@ -17,14 +19,14 @@ var playerTwo = {
   globalScore2 : 0
 }
 
+var img = document.querySelector('img')
+img.style.display = 'none'
+
+//default score
 document.querySelector('#score-0').textContent = '0'
 document.querySelector('#score-1').textContent = '0'
 document.querySelector('#current-0').textContent = '0'
 document.querySelector('#current-1').textContent = '0'
-
-var img = document.querySelector('img')
-img.style.display = 'none'
-
 const rollDice = document.querySelector('.btn-roll')
 const holdBtn = document.querySelector('.btn-hold')
 
@@ -46,6 +48,8 @@ function rollTheDice(){
 
   document.querySelector('#current-'+activePlayer).textContent = roundScore
 
+  document.querySelector('.player-'+activePlayer+'-panel').classList.add('active')
+
   console.log(dice)
 
   }else{
@@ -58,6 +62,8 @@ function nextPlayer(){
   roundScore = 0
   document.querySelector('#current-0').textContent = roundScore
   document.querySelector('#current-1').textContent = roundScore
+  document.querySelector('.player-0-panel').classList.remove('active')
+  document.querySelector('.player-1-panel').classList.remove('active')
 }
 
 function holdTheBtn(){
@@ -65,20 +71,18 @@ function holdTheBtn(){
     playerOne.globalScore1 += roundScore
     document.querySelector('#score-0').textContent = playerOne.globalScore1
     nextPlayer()
-    if(playerOne.globalScore1 >= 50){
+    if(playerOne.globalScore1 >= 100){
       document.querySelector('#name-0').textContent = 'WINNER!'
-    }else if(playerTwo.globalScore2 >= 50){
-      document.querySelector('#name-0').textContent = 'LOSE!'
+      document.querySelector('#name-1').textContent = 'LOSE!'
     }
     }
   else{
     playerTwo.globalScore2 += roundScore
     document.querySelector('#score-1').textContent = playerTwo.globalScore2
     nextPlayer()
-    if(playerTwo.globalScore2 >= 50){
+    if(playerTwo.globalScore2 >= 100){
       document.querySelector('#name-1').textContent = 'WINNER!'
-    }else if(playerOne.globalScore1 >= 50){
-      document.querySelector('#name-1').textContent = 'LOSE!'
+      document.querySelector('#name-0').textContent = 'LOSE!'
     }
   }
 }
