@@ -79,7 +79,7 @@ function holdTheBtn(){
     playerOne.globalScore1 += roundScore
     document.querySelector('#score-0').textContent = playerOne.globalScore1
     nextPlayer()
-    if(playerOne.globalScore1 >= 20){
+    if(playerOne.globalScore1 >= 100){
       document.querySelector('#name-0').textContent = 'WINNER!'
       document.querySelector('#name-1').textContent = 'LOSE!'
       document.querySelector('.player-0-panel').classList.add('winner')
@@ -90,7 +90,7 @@ function holdTheBtn(){
     playerTwo.globalScore2 += roundScore
     document.querySelector('#score-1').textContent = playerTwo.globalScore2
     nextPlayer()
-    if(playerTwo.globalScore2 >= 20){
+    if(playerTwo.globalScore2 >= 100){
       document.querySelector('#name-1').textContent = 'WINNER!'
       document.querySelector('#name-0').textContent = 'LOSE!'
       document.querySelector('.player-1-panel').classList.add('winner')
