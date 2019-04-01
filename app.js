@@ -10,38 +10,43 @@ GAME RULES:
 */
 
 //defining variable and object
+var gamePlaying
 var roundScore = 0
 var activePlayer = 0
+var prevDice
+
 var playerOne = {
-  globalScore1 : 0
+  globalScore1 : 0,
 }
 var playerTwo = {
-  globalScore2 : 0
+  globalScore2 : 0,
 }
-
 var img = document.querySelector('img')
-img.style.display = 'none'
+
+init()
+
 
 //default score
-document.querySelector('#score-0').textContent = '0'
-document.querySelector('#score-1').textContent = '0'
-document.querySelector('#current-0').textContent = '0'
-document.querySelector('#current-1').textContent = '0'
+
+
 const rollDice = document.querySelector('.btn-roll')
 const holdBtn = document.querySelector('.btn-hold')
+const btnNew = document.querySelector('.btn-new')
 
 loadEventListeners()
 
 function loadEventListeners(){
   rollDice.addEventListener('click', rollTheDice)
   holdBtn.addEventListener('click', holdTheBtn)
+  btnNew.addEventListener('click', init)
 }
 
 function rollTheDice(){
-  var dice = Math.floor(Math.random() * 6) + 1
+  if(gamePlaying){
+    var dice = Math.floor(Math.random() * 6) + 1
   img.style.display = 'block'
   img.src = 'dice-' + dice + '.png'
-
+  prevDice = dice
   if( dice !== 1){
 
   roundScore += dice
@@ -55,6 +60,7 @@ function rollTheDice(){
   }else{
   nextPlayer();
   }
+  }
 }
 
 function nextPlayer(){
@@ -67,26 +73,52 @@ function nextPlayer(){
 }
 
 function holdTheBtn(){
+  if(gamePlaying){
+
   if(activePlayer === 0){
     playerOne.globalScore1 += roundScore
     document.querySelector('#score-0').textContent = playerOne.globalScore1
     nextPlayer()
-    if(playerOne.globalScore1 >= 100){
+    if(playerOne.globalScore1 >= 20){
       document.querySelector('#name-0').textContent = 'WINNER!'
       document.querySelector('#name-1').textContent = 'LOSE!'
+      document.querySelector('.player-0-panel').classList.add('winner')
+      gamePlaying = false
     }
     }
   else{
     playerTwo.globalScore2 += roundScore
     document.querySelector('#score-1').textContent = playerTwo.globalScore2
     nextPlayer()
-    if(playerTwo.globalScore2 >= 100){
+    if(playerTwo.globalScore2 >= 20){
       document.querySelector('#name-1').textContent = 'WINNER!'
       document.querySelector('#name-0').textContent = 'LOSE!'
+      document.querySelector('.player-1-panel').classList.add('winner')
+      gamePlaying = false
     }
   }
+  }
+
 }
 
+function init(){
+  gamePlaying = true
+  roundScore = 0
+  playerOne.globalScore1 = 0
+  playerTwo.globalScore2 = 0
+  activePlayer = 0
+  img.style.display = 'none'
+
+  document.querySelector('#score-0').textContent = '0'
+  document.querySelector('#score-1').textContent = '0'
+  document.querySelector('#current-0').textContent = '0'
+  document.querySelector('#current-1').textContent = '0'
+  document.querySelector('.player-0-panel').classList.remove('winner')
+  document.querySelector('.player-1-panel').classList.remove('winner')
+  document.querySelector('#name-0').textContent = 'PLAYER 1'
+  document.querySelector('#name-1').textContent = 'PLAYER 2'
+
+}
 
 
 
